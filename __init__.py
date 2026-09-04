@@ -1,4 +1,4 @@
-from .core import build, close, get, members, put
+from .core import build, close, get, members, put, walk
 
 __all__ = [
     "build",
@@ -6,4 +6,5 @@ __all__ = [
     "get",
     "members",
     "put",
+    "walk"
 ]
