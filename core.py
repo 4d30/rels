@@ -249,6 +249,24 @@ def build(rels_root: str = RELS_ROOT) -> None:
     _merge(rels_root)
 
 
+def walk(rels_root: str = RELS_ROOT):
+    """Yield every A CID in sorted order."""
+    if rels_root is None:
+        raise ValueError("rels_root is not configured")
+
+    path = os.path.join(rels_root, "relations.bin")
+
+    if not os.path.exists(path):
+        return
+
+    with open(path, "rb") as handle:
+        while record := handle.read(RECORD_BYTES):
+            if len(record) != RECORD_BYTES:
+                raise ValueError("corrupt relationship file")
+
+            yield record[:CID_BYTES].hex()
+
+
 def close(rels_root: str | None = None) -> None:
     """Flush and close open relationship files."""
     if rels_root is not None:
