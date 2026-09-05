@@ -214,7 +214,7 @@ def _merge(rels_root: str = RELS_ROOT) -> None:
     if os.path.exists(today_by_a):
         if os.path.exists(relations_by_a):
             _merge_files(
-                relations,
+                relations_by_a,
                 today_by_a,
                 new_relations,
             )
