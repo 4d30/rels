@@ -48,7 +48,7 @@ def get(a: str, rels_root: str = RELS_ROOT) -> str | None:
         raise ValueError("rels_root is not configured")
 
     target = _cid_bytes(a)
-    path = os.path.join(rels_root, "relations.bin")
+    path = os.path.join(rels_root, "relations-by-a.bin")
 
     if not os.path.exists(path):
         return None
@@ -95,7 +95,7 @@ def members(b: str, rels_root: str = RELS_ROOT):
             handle.seek(middle * RECORD_BYTES)
 
             record = handle.read(RECORD_BYTES)
-            record_b = record[:CID_BYTES]
+            record_b = record[CID_BYTES:]
 
             if record_b < target:
                 left = middle + 1
@@ -111,7 +111,7 @@ def members(b: str, rels_root: str = RELS_ROOT):
             if len(record) < RECORD_BYTES:
                 return
 
-            record_b = record[:CID_BYTES]
+            record_b = record[CID_BYTES:]
 
             if record_b != target:
                 return
@@ -202,7 +202,7 @@ def _merge(rels_root: str = RELS_ROOT) -> None:
     today_by_a = os.path.join(rels_root, "today-by-a.bin")
     today_by_b = os.path.join(rels_root, "today-by-b.bin")
 
-    relations = os.path.join(rels_root, "relations.bin")
+    relations_by_a = os.path.join(rels_root, "relations-by-a.bin")
     relations_by_b = os.path.join(rels_root, "relations-by-b.bin")
 
     new_relations = os.path.join(rels_root, "relations.new.bin")
@@ -254,7 +254,7 @@ def walk(rels_root: str = RELS_ROOT):
     if rels_root is None:
         raise ValueError("rels_root is not configured")
 
-    path = os.path.join(rels_root, "relations.bin")
+    path = os.path.join(rels_root, "relations-by-a.bin")
 
     if not os.path.exists(path):
         return
