@@ -116,7 +116,7 @@ def members(b: str, rels_root: str = RELS_ROOT):
             if record_b != target:
                 return
 
-            yield record[CID_BYTES:].hex()
+            yield record[:CID_BYTES].hex()
 
 def _sort(rels_root: str = RELS_ROOT) -> None:
     """Sort today's records into forward and reverse indexes."""
